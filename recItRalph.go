@@ -18,21 +18,20 @@ func banner() string {
 }
 
 func readData(filePath string) [][]string {
-    f, err := os.Open(filePath)
-    if err != nil {
-        log.Fatal("Unable to read input file " + filePath, err)
-    }
-    defer f.Close()
+	f, err := os.Open(filePath)
+	if err != nil {
+		log.Fatal("Unable to read input file "+filePath, err)
+	}
+	defer f.Close()
 
-    csvReader := csv.NewReader(f)
-    records, err := csvReader.ReadAll()
-    if err != nil {
-        log.Fatal("Unable to parse file as CSV for " + filePath, err)
-    }
+	csvReader := csv.NewReader(f)
+	records, err := csvReader.ReadAll()
+	if err != nil {
+		log.Fatal("Unable to parse file as CSV for "+filePath, err)
+	}
 
-    return records
+	return records
 }
-
 
 func main() {
 
@@ -45,35 +44,27 @@ func main() {
 	bkPath := parser.String("b", "bkPath", &argparse.Options{Required: true, Help: "The path to the bank.csv", Default: "null"})
 
 	format := parser.String("f", "format", &argparse.Options{Required: false, Help: "Choose output format: csv json shell", Default: "shell"})
-	
+
 	dflag := parser.Flag("d", "debug", &argparse.Options{Required: false, Help: "Run Debug options", Default: false})
-	
+
 	err := parser.Parse(os.Args)
 	if err != nil {
 		fmt.Print(parser.Usage(err))
 		os.Exit(1)
 	}
 
-
-
-	
 	bkRecords := readData(*bkPath)
 	qbRecords := readData(*qbPath)
 
-
-	if 	*dflag{
+	if *dflag {
 		fmt.Printf("q: %s\n", *qbPath)
 		fmt.Printf("b: %s\n", *bkPath)
 		fmt.Printf("f: %s\n", *format)
 
-		for _, eachRecord := range bkRecords {
-			fmt.Println(eachRecord)
-		}
+		fmt.Println(bkRecords)
 
 		fmt.Println("-------------------------------------------------------")
 
-		for _, eachRecord := range qbRecords {
-			fmt.Println(eachRecord)
-		}
+		fmt.Println(qbRecords)
 	}
 }
