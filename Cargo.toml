@@ -1,6 +1,0 @@
-[package]
-name = "rec-it-ralph"
-version = "0.1.0"
-edition = "2021"
-
-[dependencies]
